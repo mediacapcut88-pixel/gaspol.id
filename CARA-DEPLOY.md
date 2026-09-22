@@ -1,37 +1,47 @@
-# Cara Deploy Website GASPOL ke GitHub Pages (Gratis)
+# Website GASPOL — Cara Rilis & Memperbarui
 
-File `index.html` di folder ini adalah seluruh website kamu — satu file, tidak perlu instalasi apapun.
+File `index.html` di folder ini adalah seluruh website — satu file, tidak perlu instalasi apapun.
 
-## Langkah-langkah
+## Website sudah rilis
 
-1. **Buat akun GitHub** (kalau belum punya) di https://github.com/signup
+Alamatnya: **https://mediacapcut88-pixel.github.io/gaspol.id/**
 
-2. **Buat repository baru**
-   - Klik tombol "+" di kanan atas → "New repository"
-   - Nama repository bebas, contoh: `gaspol-website`
-   - Pilih "Public"
-   - Klik "Create repository"
+Repo: https://github.com/mediacapcut88-pixel/gaspol.id
 
-3. **Upload file `index.html`**
-   - Di halaman repository yang baru dibuat, klik "uploading an existing file"
-   - Seret file `index.html` ke area upload
-   - Klik "Commit changes"
+Langkah manual di bawah ini sudah dikerjakan semua, jadi tidak perlu diulang.
+Catatan ini disimpan kalau nanti perlu bikin website kedua.
 
-4. **Aktifkan GitHub Pages**
-   - Buka tab "Settings" di repository tersebut
-   - Di menu kiri, klik "Pages"
-   - Di bagian "Branch", pilih `main` dan folder `/ (root)`
-   - Klik "Save"
+## Cara memperbarui website
 
-5. **Tunggu 1-2 menit**, lalu website kamu akan aktif di alamat:
+Setelah mengubah `index.html`, jalankan tiga perintah ini di folder WEBSITE:
+
+```
+git add -A
+git commit -m "jelaskan perubahannya di sini"
+git push
+```
+
+Website akan ikut berubah sekitar 1-2 menit kemudian. Tidak perlu upload
+manual lagi lewat browser.
+
+Kalau lebih nyaman lewat browser: buka repo di GitHub, klik file `index.html`,
+klik ikon pensil, edit, lalu "Commit changes".
+
+## Langkah manual (arsip, kalau mau bikin website lain)
+
+1. **Buat repository baru** di https://github.com/new, pilih "Public"
+
+2. **Upload file `index.html`** lewat tautan "uploading an existing file"
+
+3. **Aktifkan GitHub Pages** di Settings -> Pages -> Branch: `main`, folder `/ (root)` -> Save
+
+4. **Tunggu 1-2 menit**, website aktif di
    `https://<username-github-kamu>.github.io/<nama-repository>/`
-
-   Contoh: `https://budi123.github.io/gaspol-website/`
 
 ## Kalau nanti mau pakai domain sendiri (misal gaspolmotor.id)
 
 1. Beli domain di penyedia seperti Niagahoster, Domainesia, atau Namecheap
-2. Di pengaturan DNS domain, arahkan (CNAME) ke `<username-github-kamu>.github.io`
+2. Di pengaturan DNS domain, arahkan (CNAME) ke `mediacapcut88-pixel.github.io`
 3. Di GitHub Pages Settings, masukkan domain itu di kolom "Custom domain"
 
 ## Catatan tentang forum & form gabung
