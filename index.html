@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GASPOL — Komunitas Otomotif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0B0D;
+    --panel: #17171A;
+    --panel-alt: #1E1E22;
+    --accent: #FF4128;
+    --accent-dim: #C4341F;
+    --yellow: #F2B705;
+    --text: #F5F3EE;
+    --text-muted: #9C9BA3;
+    --line: #2A2A2E;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  *, *::before, *::after { box-sizing: inherit; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, .display {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin: 0;
+    font-weight: 600;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 96px 0; }
+  @media (max-width: 720px) { .section { padding: 64px 0; } }
+
+  /* NAV */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: rgba(11,11,13,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 76px;
+  }
+  .logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px; font-weight: 700;
+    letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo .dot { width: 10px; height: 10px; background: var(--accent); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+  .navlinks { display: flex; gap: 32px; font-size: 15px; font-weight: 500; }
+  .navlinks a { color: var(--text-muted); transition: color .15s ease; }
+  .navlinks a:hover { color: var(--text); }
+  .navcta {
+    background: var(--accent); color: #1A0B08;
+    padding: 10px 22px; font-weight: 600; font-size: 14px;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  }
+  .navcta:hover { background: var(--yellow); }
+  .navtoggle { display: none; background: none; border: none; color: var(--text); font-size: 26px; cursor: pointer; }
+  @media (max-width: 860px) {
+    .navlinks { display: none; }
+    .navtoggle { display: block; }
+  }
+  .mobilemenu { display: none; flex-direction: column; gap: 4px; padding: 0 24px 20px; }
+  .mobilemenu.open { display: flex; }
+  .mobilemenu a { padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--text-muted); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 80px 0 100px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: -20% -10%;
+    background:
+      repeating-linear-gradient(115deg, transparent 0 120px, rgba(255,65,40,0.05) 120px 122px, transparent 122px 240px);
+    pointer-events: none;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; position: relative; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .eyebrow-stripe { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .eyebrow-stripe .bar { width: 40px; height: 4px; background: var(--accent); }
+  .eyebrow-stripe span { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+  h1.hero-title {
+    font-size: clamp(56px, 9vw, 108px);
+    line-height: 0.92;
+    color: var(--text);
+  }
+  h1.hero-title .accent { color: var(--accent); }
+  .hero-sub {
+    max-width: 480px; margin: 28px 0 36px;
+    color: var(--text-muted); font-size: 17px;
+  }
+  .btn-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary, .btn-ghost {
+    display: inline-block; padding: 15px 30px; font-weight: 600; font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: #1A0B08;
+    clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+  }
+  .btn-primary:hover { background: var(--yellow); }
+  .btn-ghost {
+    background: transparent; color: var(--text); border: 1px solid var(--line);
+    clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats { display: flex; gap: 32px; margin-top: 48px; flex-wrap: wrap; }
+  .hero-stat .num { font-family: 'Oswald', sans-serif; font-size: 34px; color: var(--yellow); }
+  .hero-stat .lbl { font-size: 13px; color: var(--text-muted); }
+  .hero-art { position: relative; }
+  .hero-art svg { width: 100%; height: auto; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; }
+  @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .section-tag { color: var(--accent); font-weight: 600; font-size: 14px; margin-bottom: 14px; letter-spacing: 0.02em; }
+  h2.section-title { font-size: clamp(34px, 5vw, 52px); line-height: 1; margin-bottom: 20px; }
+  .about-text p { color: var(--text-muted); font-size: 16px; max-width: 60ch; }
+  .value-list { display: flex; flex-direction: column; gap: 0; margin-top: 24px; }
+  .value-item {
+    padding: 22px 0; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 90px 1fr; gap: 20px; align-items: start;
+  }
+  .value-item:last-child { border-bottom: 1px solid var(--line); }
+  .value-item .vnum { font-family: 'Oswald', sans-serif; font-size: 26px; color: var(--panel-alt); -webkit-text-stroke: 1px var(--text-muted); color: transparent; }
+  .value-item h3 { font-size: 19px; margin-bottom: 6px; text-transform: none; }
+  .value-item p { color: var(--text-muted); font-size: 15px; margin: 0; }
+
+  /* GALLERY */
+  .gallery-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; gap: 24px; flex-wrap: wrap; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 160px; gap: 10px; }
+  @media (max-width: 860px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; } }
+  .gtile {
+    position: relative; overflow: hidden;
+    display: flex; align-items: flex-end; padding: 14px;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+  }
+  .gtile span { position: relative; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.92); }
+  .gtile.tall { grid-row: span 2; }
+  .gtile.wide { grid-column: span 2; }
+  .gtile.t1 { background: linear-gradient(155deg, #3B0F08 0%, #FF4128 140%); }
+  .gtile.t2 { background: linear-gradient(155deg, #1E1E22 0%, #43434A 140%); }
+  .gtile.t3 { background: linear-gradient(155deg, #4A3600 0%, #F2B705 150%); }
+  .gtile.t4 { background: linear-gradient(155deg, #17171A 0%, #FF4128 200%); }
+  .gtile.t5 { background: linear-gradient(155deg, #26160C 0%, #C4341F 160%); }
+  .gtile.t6 { background: linear-gradient(155deg, #1E1E22 0%, #F2B705 220%); }
+  .gtile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.55), transparent 60%); }
+
+  /* FORUM */
+  .forum-layout { display: grid; grid-template-columns: 1fr 340px; gap: 40px; }
+  @media (max-width: 900px) { .forum-layout { grid-template-columns: 1fr; } }
+  .thread-list { display: flex; flex-direction: column; gap: 1px; background: var(--line); }
+  .thread {
+    background: var(--panel); padding: 20px 22px; display: grid;
+    grid-template-columns: 44px 1fr; gap: 16px;
+  }
+  .avatar {
+    width: 44px; height: 44px; background: var(--panel-alt);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Oswald', sans-serif; font-size: 15px; color: var(--yellow);
+    clip-path: polygon(20% 0, 80% 0, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 80%, 0 20%);
+  }
+  .thread-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+  .thread-name { font-weight: 600; font-size: 15px; }
+  .thread-time { color: var(--text-muted); font-size: 13px; }
+  .thread-title { font-weight: 600; font-size: 16px; margin-bottom: 4px; }
+  .thread-body { color: var(--text-muted); font-size: 14.5px; }
+  .thread-meta { margin-top: 10px; display: flex; gap: 18px; font-size: 13px; color: var(--text-muted); }
+  .composer {
+    background: var(--panel); padding: 24px; align-self: start;
+    border-top: 3px solid var(--accent);
+  }
+  .composer h3 { font-size: 18px; margin-bottom: 16px; text-transform: none; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+  .field input, .field textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--line);
+    color: var(--text); padding: 11px 13px; font-family: 'Inter', sans-serif;
+    font-size: 14px; resize: vertical;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  .composer .btn-primary { width: 100%; text-align: center; margin-top: 4px; }
+  .form-note { font-size: 13px; color: var(--text-muted); margin-top: 12px; }
+  .form-error { font-size: 13px; color: var(--yellow); margin-top: 8px; display: none; }
+
+  /* EVENTS */
+  .event-timeline { position: relative; }
+  .event-row {
+    display: grid; grid-template-columns: 140px 1fr; gap: 28px;
+    padding: 28px 0; border-top: 1px solid var(--line);
+  }
+  .event-row:last-child { border-bottom: 1px solid var(--line); }
+  @media (max-width: 640px) { .event-row { grid-template-columns: 1fr; gap: 8px; } }
+  .event-date { font-family: 'Oswald', sans-serif; }
+  .event-date .day { font-size: 40px; line-height: 1; color: var(--accent); }
+  .event-date .mon { font-size: 14px; color: var(--text-muted); letter-spacing: 0.1em; }
+  .event-title { font-size: 20px; font-weight: 600; margin-bottom: 6px; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+  .event-desc { color: var(--text-muted); font-size: 15px; max-width: 62ch; margin-bottom: 10px; }
+  .event-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+  .event-tag { font-size: 12px; padding: 5px 11px; background: var(--panel-alt); color: var(--text-muted); }
+
+  /* JOIN */
+  .join-section { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .join-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  @media (max-width: 860px) { .join-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .join-form { display: grid; gap: 14px; }
+  .join-form .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 500px) { .join-form .row2 { grid-template-columns: 1fr; } }
+  .success-box {
+    display: none; padding: 18px 20px; background: rgba(242,183,5,0.1);
+    border-left: 3px solid var(--yellow); font-size: 14.5px; margin-top: 16px;
+  }
+  .success-box.show { display: block; }
+
+  footer { padding: 56px 0 40px; }
+  .footer-grid { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 32px; }
+  .footer-links { display: flex; gap: 24px; font-size: 14px; color: var(--text-muted); flex-wrap: wrap; }
+  .footer-links a:hover { color: var(--accent); }
+  .foot-copy { font-size: 13px; color: var(--text-muted); }
+
+  .fade-in { animation: fadeUp .7s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .fade-in { animation: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="dot"></span>GASPOL</div>
+    <div class="navlinks">
+      <a href="#tentang">Tentang</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#forum">Forum</a>
+      <a href="#event">Event</a>
+    </div>
+    <a href="#gabung" class="navcta">Gabung</a>
+    <button class="navtoggle" id="navToggle" aria-label="Buka menu">☰</button>
+  </nav>
+  <div class="mobilemenu" id="mobileMenu">
+    <a href="#tentang">Tentang</a>
+    <a href="#galeri">Galeri</a>
+    <a href="#forum">Forum</a>
+    <a href="#event">Event</a>
+    <a href="#gabung">Gabung</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="fade-in">
+      <div class="eyebrow-stripe"><span class="bar"></span><span>Komunitas motor, terbuka untuk semua</span></div>
+      <h1 class="hero-title">GASPOL<br>BARENG,<br><span class="accent">BUKAN</span><br>SENDIRIAN.</h1>
+      <p class="hero-sub">Merek apapun, tipe motor apapun, baru gabung dunia motor atau udah puluhan tahun di jalan — nggak ada syarat buat masuk sini. Yang penting suka motor dan mau kenalan.</p>
+      <div class="btn-row">
+        <a href="#gabung" class="btn-primary">Gabung komunitas</a>
+        <a href="#event" class="btn-ghost">Lihat jadwal kopdar</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">2.400+</div><div class="lbl">Anggota aktif</div></div>
+        <div class="hero-stat"><div class="num">18</div><div class="lbl">Kota terhubung</div></div>
+        <div class="hero-stat"><div class="num">2017</div><div class="lbl">Berdiri sejak</div></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lambang bundar GASPOL Motor Club">
+        <defs>
+          <path id="topArc" d="M 45 240 A 195 195 0 0 1 435 240" fill="none"/>
+          <path id="bottomArc" d="M 45 240 A 195 195 0 0 0 435 240" fill="none"/>
+        </defs>
+
+        <circle cx="240" cy="240" r="215" fill="none" stroke="var(--text)" stroke-width="3"/>
+        <circle cx="240" cy="240" r="150" fill="none" stroke="var(--accent)" stroke-width="3"/>
+
+        <circle cx="240" cy="25" r="4" fill="var(--yellow)"/>
+        <circle cx="240" cy="455" r="4" fill="var(--yellow)"/>
+        <polygon points="45,240 53,232 61,240 53,248" fill="var(--yellow)"/>
+        <polygon points="435,240 443,232 451,240 443,248" fill="var(--yellow)"/>
+
+        <text font-family="Oswald, sans-serif" font-size="26" font-weight="600" letter-spacing="4">
+          <textPath href="#topArc" startOffset="50%" text-anchor="middle"><tspan fill="var(--accent)">GASPOL</tspan><tspan fill="var(--text)"> MOTOR CLUB</tspan></textPath>
+        </text>
+        <text font-family="Oswald, sans-serif" font-size="17" font-weight="500" letter-spacing="3" fill="var(--text-muted)">
+          <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">RIDE TOGETHER • NO LIMIT</textPath>
+        </text>
+
+        <g fill="none" stroke="var(--text)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="192" cy="325" r="30"/>
+          <circle cx="288" cy="325" r="30"/>
+          <path d="M192 325 L235 325 L255 282 L295 282 L320 252 L345 250"/>
+          <path d="M288 325 L320 252"/>
+          <path d="M235 325 C235 292 262 282 278 290"/>
+          <path d="M345 250 L330 215 L296 215"/>
+        </g>
+        <circle cx="192" cy="325" r="6" fill="var(--text)"/>
+        <circle cx="288" cy="325" r="6" fill="var(--text)"/>
+
+        <path d="M170 366 L310 366" stroke="var(--accent)" stroke-width="5"/>
+        <path d="M185 378 L295 378" stroke="var(--yellow)" stroke-width="5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tentang">
+  <div class="wrap about-grid">
+    <div>
+      <div class="section-tag">Tentang GASPOL</div>
+      <h2 class="section-title">Bukan cuma soal motor.</h2>
+      <div class="about-text">
+        <p>GASPOL lahir dari sekelompok kecil pengendara motor yang capek riding sendirian dan pengen ada tempat buat berbagi rute, servis, sampai numpang keluh soal motor mogok tengah malam. Nggak dibatasi merek, tipe, atau komunitas asal — motor sport, bebek, matic, trail, semua welcome. Sekarang jadi rumah buat ribuan pengendara motor dari berbagai kota.</p>
+      </div>
+    </div>
+    <div class="value-list">
+      <div class="value-item">
+        <div class="vnum">01</div>
+        <div><h3>Touring bareng, rutin</h3><p>Ada jadwal kopdar dan touring tiap bulan, dari city ride santai sampai lintas provinsi.</p></div>
+      </div>
+      <div class="value-item">
+        <div class="vnum">02</div>
+        <div><h3>Bantu-bantu di jalan</h3><p>Jaringan anggota di 18 kota siap dihubungi kalau ada yang mogok atau butuh info bengkel.</p></div>
+      </div>
+      <div class="value-item">
+        <div class="vnum">03</div>
+        <div><h3>Belajar bareng soal mesin</h3><p>Sharing servis ringan, modifikasi aman, dan tips perawatan dari anggota yang lebih senior.</p></div>
+      </div>
+      <div class="value-item">
+        <div class="vnum">04</div>
+        <div><h3>Terbuka untuk semua</h3><p>Nggak ada syarat merek, tipe, tahun motor, atau komunitas asal — siapapun pengendara motor boleh gabung.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="galeri">
+  <div class="wrap">
+    <div class="gallery-head">
+      <div>
+        <div class="section-tag">Dari jalan raya</div>
+        <h2 class="section-title">Galeri komunitas</h2>
+      </div>
+      <p style="color:var(--text-muted); max-width:40ch; margin:0;">Cuplikan dari kopdar, touring, dan momen-momen ngumpul anggota GASPOL.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gtile t1 tall"><span>Touring Lintas Jawa — Agustus</span></div>
+      <div class="gtile t2"><span>Kopdar mingguan, alun-alun kota</span></div>
+      <div class="gtile t3 wide"><span>Konvoi subuh sebelum city ride</span></div>
+      <div class="gtile t4"><span>Sesi servis bareng di basecamp</span></div>
+      <div class="gtile t5"><span>Anniversary GASPOL ke-7</span></div>
+      <div class="gtile t6"><span>Camping ground, touring gunung</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="forum">
+  <div class="wrap">
+    <div class="gallery-head">
+      <div>
+        <div class="section-tag">Ruang diskusi</div>
+        <h2 class="section-title">Forum anggota</h2>
+      </div>
+    </div>
+    <div class="forum-layout">
+      <div>
+        <div class="thread-list" id="threadList"></div>
+      </div>
+      <div class="composer">
+        <h3>Buka obrolan baru</h3>
+        <div class="field">
+          <label for="fName">Nama panggilan</label>
+          <input type="text" id="fName" placeholder="Nama kamu di forum">
+        </div>
+        <div class="field">
+          <label for="fTitle">Judul topik</label>
+          <input type="text" id="fTitle" placeholder="Misal: Rute aman ke Puncak?">
+        </div>
+        <div class="field">
+          <label for="fBody">Isi obrolan</label>
+          <textarea id="fBody" rows="4" placeholder="Ceritakan apa yang mau kamu bahas"></textarea>
+        </div>
+        <button class="btn-primary" id="fSubmit" type="button">Kirim ke forum</button>
+        <p class="form-error" id="fError">Isi nama, judul, dan isi obrolan dulu ya.</p>
+        <p class="form-note">Obrolan tersimpan di browser ini saja, khusus untuk pratinjau.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="event">
+  <div class="wrap">
+    <div class="section-tag">Agenda</div>
+    <h2 class="section-title" style="margin-bottom:36px;">Jadwal kopdar &amp; touring</h2>
+    <div class="event-timeline">
+      <div class="event-row">
+        <div class="event-date"><div class="day">05</div><div class="mon">OKTOBER</div></div>
+        <div>
+          <div class="event-title">City Ride Malam Minggu</div>
+          <p class="event-desc">Kumpul santai keliling kota, cocok buat anggota baru yang mau kenalan dulu sebelum ikut touring jauh.</p>
+          <div class="event-tags"><span class="event-tag">Santai</span><span class="event-tag">Anggota baru welcome</span></div>
+        </div>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="day">19</div><div class="mon">OKTOBER</div></div>
+        <div>
+          <div class="event-title">Sesi Servis Bareng</div>
+          <p class="event-desc">Cek kondisi kendaraan sebelum musim touring akhir tahun, dipandu anggota yang paham mesin.</p>
+          <div class="event-tags"><span class="event-tag">Basecamp</span><span class="event-tag">Bawa kendaraan</span></div>
+        </div>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="day">08</div><div class="mon">NOVEMBER</div></div>
+        <div>
+          <div class="event-title">Touring Lintas Provinsi</div>
+          <p class="event-desc">Perjalanan dua hari satu malam, konvoi besar dengan pengawalan dan titik kumpul di tiap kota.</p>
+          <div class="event-tags"><span class="event-tag">2 hari</span><span class="event-tag">Wajib daftar</span></div>
+        </div>
+      </div>
+      <div class="event-row">
+        <div class="event-date"><div class="day">30</div><div class="mon">NOVEMBER</div></div>
+        <div>
+          <div class="event-title">Anniversary GASPOL</div>
+          <p class="event-desc">Perayaan ulang tahun komunitas, ada konvoi pagi, games, dan makan bareng seluruh anggota.</p>
+          <div class="event-tags"><span class="event-tag">Seluruh kota</span><span class="event-tag">Keluarga boleh ikut</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section join-section" id="gabung">
+  <div class="wrap join-grid">
+    <div>
+      <div class="section-tag">Gabung sekarang</div>
+      <h2 class="section-title">Siap gaspol bareng kami?</h2>
+      <p style="color:var(--text-muted); max-width:44ch;">Isi data singkat di samping, lalu tekan kirim. Datanya langsung diteruskan ke WhatsApp admin GASPOL buat masuk grup kota terdekat.</p>
+    </div>
+    <div>
+      <div class="join-form">
+        <div class="row2">
+          <div class="field" style="margin-bottom:0;">
+            <label for="jName">Nama lengkap</label>
+            <input type="text" id="jName" placeholder="Nama kamu">
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label for="jWa">Nomor WhatsApp</label>
+            <input type="tel" id="jWa" placeholder="08xx-xxxx-xxxx">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field" style="margin-bottom:0;">
+            <label for="jKota">Kota</label>
+            <input type="text" id="jKota" placeholder="Kota domisili">
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label for="jKendaraan">Jenis kendaraan</label>
+            <input type="text" id="jKendaraan" placeholder="Misal: motor sport, bebek, matic, trail">
+          </div>
+        </div>
+        <p class="form-error" id="jError">Isi nama, nomor WhatsApp, dan kota dulu ya.</p>
+        <button class="btn-primary" id="jSubmit" type="button">Kirim lewat WhatsApp</button>
+        <div class="success-box" id="jSuccess"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="logo" style="font-size:20px;"><span class="dot"></span>GASPOL</div>
+    <div class="footer-links">
+      <a href="#tentang">Tentang</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#forum">Forum</a>
+      <a href="#event">Event</a>
+      <a href="#gabung">Gabung</a>
+    </div>
+    <div class="foot-copy">© 2026 GASPOL Community</div>
+  </div>
+</footer>
+
+<script>
+  // Nomor WhatsApp admin GASPOL yang menerima pendaftaran.
+  // Format internasional tanpa tanda "+": 08123456789 ditulis 628123456789
+  var ADMIN_WA = '';
+
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function () {
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { mobileMenu.classList.remove('open'); });
+  });
+
+  var THREAD_KEY = 'gaspol_forum_threads';
+  var defaultThreads = [
+    { name: 'Dimas R.', title: 'Rute aman lewat tol malam?', body: 'Ada yang pernah lewat rute alternatif buat hindari macet pas pulang touring malam? Share dong pengalamannya.', time: '2 jam lalu', replies: 14, city: 'Bandung' },
+    { name: 'Sari W.', title: 'Rekomendasi bengkel langganan', body: 'Lagi cari bengkel yang paham motor sport di daerah Jakarta Timur, ada rekomendasi dari anggota sini?', time: 'Kemarin', replies: 9, city: 'Jakarta' },
+    { name: 'Budi H.', title: 'Persiapan sebelum touring 2 hari', body: 'Buat yang baru pertama kali ikut touring jauh, apa aja checklist wajib sebelum berangkat?', time: '3 hari lalu', replies: 22, city: 'Surabaya' }
+  ];
+
+  function loadThreads() {
+    try {
+      var raw = localStorage.getItem(THREAD_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+  }
+
+  function saveThreads(list) {
+    try { localStorage.setItem(THREAD_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function initials(name) {
+    return name.trim().split(/\s+/).slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase();
+  }
+
+  function renderThreads() {
+    var listEl = document.getElementById('threadList');
+    var userThreads = loadThreads();
+    var all = userThreads.concat(defaultThreads);
+    listEl.innerHTML = '';
+    all.forEach(function (t) {
+      var row = document.createElement('div');
+      row.className = 'thread';
+      row.innerHTML =
+        '<div class="avatar">' + esc(initials(t.name)) + '</div>' +
+        '<div>' +
+          '<div class="thread-top"><span class="thread-name">' + esc(t.name) + '</span><span class="thread-time">' + esc(t.time) + '</span></div>' +
+          '<div class="thread-title">' + esc(t.title) + '</div>' +
+          '<div class="thread-body">' + esc(t.body) + '</div>' +
+          '<div class="thread-meta"><span>' + esc(t.replies) + ' balasan</span><span>' + esc(t.city) + '</span></div>' +
+        '</div>';
+      listEl.appendChild(row);
+    });
+  }
+  renderThreads();
+
+  document.getElementById('fSubmit').addEventListener('click', function () {
+    var name = document.getElementById('fName').value.trim();
+    var title = document.getElementById('fTitle').value.trim();
+    var body = document.getElementById('fBody').value.trim();
+    var errEl = document.getElementById('fError');
+    if (!name || !title || !body) {
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+    var threads = loadThreads();
+    threads.unshift({ name: name, title: title, body: body, time: 'Baru saja', replies: 0, city: 'Anggota baru' });
+    saveThreads(threads);
+    document.getElementById('fName').value = '';
+    document.getElementById('fTitle').value = '';
+    document.getElementById('fBody').value = '';
+    renderThreads();
+  });
+
+  ['fName', 'fTitle', 'fBody'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
+      document.getElementById('fError').style.display = 'none';
+    });
+  });
+
+  document.getElementById('jSubmit').addEventListener('click', function () {
+    var name = document.getElementById('jName').value.trim();
+    var wa = document.getElementById('jWa').value.trim();
+    var kota = document.getElementById('jKota').value.trim();
+    var errEl = document.getElementById('jError');
+    var okEl = document.getElementById('jSuccess');
+    if (!name || !wa || !kota) {
+      errEl.style.display = 'block';
+      okEl.classList.remove('show');
+      return;
+    }
+    errEl.style.display = 'none';
+    var kendaraan = document.getElementById('jKendaraan').value.trim();
+    var pesan =
+      'Halo GASPOL, saya mau gabung komunitas.\n\n' +
+      'Nama: ' + name + '\n' +
+      'Kota: ' + kota + '\n' +
+      'WhatsApp: ' + wa + '\n' +
+      'Kendaraan: ' + (kendaraan || '-');
+    if (ADMIN_WA) {
+      var waUrl = 'https://wa.me/' + ADMIN_WA + '?text=' + encodeURIComponent(pesan);
+      if (!window.open(waUrl, '_blank')) { window.location.href = waUrl; }
+      okEl.textContent = 'Chat WhatsApp sudah dibuka. Tinggal tekan kirim, nanti tim GASPOL yang balas.';
+    } else {
+      okEl.textContent = 'Nomor admin belum diatur di website ini.';
+    }
+    okEl.classList.add('show');
+  });
+
+  ['jName', 'jWa', 'jKota'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
+      document.getElementById('jError').style.display = 'none';
+    });
+  });
+</script>
+</body>
+</html>
